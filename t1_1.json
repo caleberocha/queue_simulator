@@ -1,0 +1,29 @@
+{
+    "seeds": [
+        123,
+        562,
+        53,
+        453,
+        567
+    ],
+    "random_count": 100000,
+    "initialEvent": {
+        "queue": "F1",
+        "time": 3.0
+    },
+    "queues": [
+        {
+            "name": "F1",
+            "servers": 1,
+            "capacity": 5,
+            "arrival": [
+                2.0,
+                4.0
+            ],
+            "service": [
+                3.0,
+                5.0
+            ]
+        }
+    ]
+}
