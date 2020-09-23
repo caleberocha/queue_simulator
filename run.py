@@ -23,7 +23,7 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
             params = json.loads(input_json)
         except json.JSONDecodeError:
             log.error("JSON inválido")
-            return
+            return 1
     else:
         raise NoInputError()
 
@@ -40,7 +40,10 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
             rnd_numbers_list = params["rndNumbers"]
     except KeyError as e:
         log.error(f"Elemento {e} não encontrado")
-        return
+        return 2
+    except ValueError:
+        log.error(f""""arrival" (apenas fila 1) e "service" devem ser listas com 2 elementos""")
+        return 3
 
     escalonator = Escalonator()
     elapsed_time = ElapsedTime()
@@ -73,6 +76,7 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
 
     elapsed_time.reset()
     log.info(sim_result.get_result())
+    return 0
 
 
 if __name__ == "__main__":
@@ -82,4 +86,5 @@ if __name__ == "__main__":
         print(f"Erro: {e}")
         quit(1)
 
-    run_simulator(**args)
+    retval = run_simulator(**args)
+    quit(retval)
