@@ -39,7 +39,7 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
             simulations = 1
             rnd_numbers_list = params["rndNumbers"]
     except KeyError as e:
-        log.error(f"Erro: Elemento {e} não encontrado")
+        log.error(f"Elemento {e} não encontrado")
         return
 
     escalonator = Escalonator()
