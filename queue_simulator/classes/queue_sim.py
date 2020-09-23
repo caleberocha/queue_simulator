@@ -1,6 +1,6 @@
 from functools import reduce
-from errors import QueueFullError
-from logger import logger
+from ..errors import QueueFullError
+from ..logger import logger
 
 
 class Queue:

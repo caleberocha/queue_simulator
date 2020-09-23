@@ -1,14 +1,14 @@
 import json
 import logging
-from classes.event import Event
-from classes.queue_list import QueueList
-from classes.escalonator import Escalonator
-from classes.rnd_numbers import RandomNumbers
-from classes.sim_result import SimulationResult
-from classes.elapsed_time import ElapsedTime
-from functions import parse_args
-from errors import NoInputError, NoMoreRandomNumbersError, UnexpectedError
-from logger import logger
+from .classes.event import Event
+from .classes.queue_list import QueueList
+from .classes.escalonator import Escalonator
+from .classes.rnd_numbers import RandomNumbers
+from .classes.sim_result import SimulationResult
+from .classes.elapsed_time import ElapsedTime
+from .functions import parse_args
+from .errors import NoInputError, NoMoreRandomNumbersError, UnexpectedError
+from .logger import logger
 
 
 def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):

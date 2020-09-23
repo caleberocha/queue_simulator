@@ -1,7 +1,7 @@
 from functools import reduce
-from classes.queue_list import QueueList
-from classes.queue_sim import Queue
-from classes.elapsed_time import ElapsedTime
+from .queue_list import QueueList
+from .queue_sim import Queue
+from .elapsed_time import ElapsedTime
 
 
 class SimulationResult:

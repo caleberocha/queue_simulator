@@ -1,7 +1,7 @@
-from classes.rnd_generator import RandomGenerator
-from classes.rnd_numbers_list import RandomNumberList
+from .rnd_generator import RandomGenerator
+from .rnd_numbers_list import RandomNumberList
 from queue import Queue
-from decorators import singleton
+from ..decorators import singleton
 
 
 @singleton

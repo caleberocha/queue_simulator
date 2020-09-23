@@ -1,5 +1,5 @@
-from classes.queue_list import QueueList
-from decorators import singleton
+from .queue_list import QueueList
+from ..decorators import singleton
 
 
 @singleton

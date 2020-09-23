@@ -7,10 +7,10 @@ Python 3.7
 ## Uso
 
     # Com arquivo de entrada
-    python3 run.py arquivo [--debug]
+    python3 -m queue_simulator arquivo [--debug]
     
     # Com string json de entrada
-    python3 run.py string_json [--debug]
+    python3 -m queue_simulator string_json [--debug]
     
 ## Formato de entrada
 O arquivo ou string de entrada deve estar no formato JSON.

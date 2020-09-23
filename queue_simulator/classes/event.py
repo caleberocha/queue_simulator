@@ -1,9 +1,9 @@
-from classes.queue_list import QueueList
-from classes.escalonator import Escalonator
-from classes.rnd_numbers import RandomNumbers
-from classes.elapsed_time import ElapsedTime
-from functions import conversion
-from errors import UnexpectedError
+from .queue_list import QueueList
+from .escalonator import Escalonator
+from .rnd_numbers import RandomNumbers
+from .elapsed_time import ElapsedTime
+from ..functions import conversion
+from ..errors import UnexpectedError
 
 
 class Event:

@@ -1,5 +1,5 @@
-from classes.queue_sim import Queue
-from decorators import singleton
+from .queue_sim import Queue
+from ..decorators import singleton
 
 
 @singleton

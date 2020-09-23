@@ -1,7 +1,7 @@
 from queue import PriorityQueue
-from decorators import singleton
-from errors import EmptyEscalonatorError
-from logger import logger
+from ..decorators import singleton
+from ..errors import EmptyEscalonatorError
+from ..logger import logger
 
 
 @singleton

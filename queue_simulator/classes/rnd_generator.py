@@ -1,9 +1,4 @@
-if __name__ == "__main__":
-    import os, sys
-
-    sys.path.append(os.path.join(sys.path[0], ".."))
-
-from errors import NoMoreRandomNumbersError
+from ..errors import NoMoreRandomNumbersError
 
 
 class RandomGenerator:

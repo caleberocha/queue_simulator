@@ -1,5 +1,5 @@
 from queue import Queue, Empty
-from errors import NoMoreRandomNumbersError
+from ..errors import NoMoreRandomNumbersError
 
 
 class RandomNumberList:
