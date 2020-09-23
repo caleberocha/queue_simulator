@@ -20,7 +20,13 @@ class QueueList:
 
     def reset_queues(self):
         self.queues = [
-            Queue(q["name"], q["servers"], q["capacity"], q["arrival"] if "arrival" in q.keys() else [-1, -1], q["service"])
-            for q in self.queues_params
+            Queue(
+                q["name"],
+                q["servers"],
+                q["capacity"],
+                q["arrival"] if i == 0 else [None, None],
+                q["service"],
+            )
+            for i, q in enumerate(self.queues_params)
         ]
         self.last_time = 0

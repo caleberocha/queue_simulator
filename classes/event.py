@@ -3,6 +3,7 @@ from classes.escalonator import Escalonator
 from classes.rnd_numbers import RandomNumbers
 from classes.elapsed_time import ElapsedTime
 from functions import conversion
+from errors import UnexpectedError
 
 
 class Event:
@@ -63,6 +64,9 @@ class Event:
                     escalonator.put(event)
 
             if self.queue_index == -1:
+                if next_queue.min_arrival is None or next_queue.max_arrival is None:
+                    raise UnexpectedError(f"Fila {next_queue.name} sem arrival definido, isso não deveria acontecer!")
+
                 new_time = conversion(
                     next_queue.min_arrival,
                     next_queue.max_arrival,

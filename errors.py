@@ -12,3 +12,7 @@ class NoMoreRandomNumbersError(Exception):
 
 class EmptyEscalonatorError(Exception):
     pass
+
+
+class UnexpectedError(Exception):
+    pass

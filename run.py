@@ -7,7 +7,7 @@ from classes.rnd_numbers import RandomNumbers
 from classes.sim_result import SimulationResult
 from classes.elapsed_time import ElapsedTime
 from functions import parse_args
-from errors import NoInputError, NoMoreRandomNumbersError
+from errors import NoInputError, NoMoreRandomNumbersError, UnexpectedError
 from logger import logger
 
 
@@ -71,6 +71,9 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
                 event.run()
             except NoMoreRandomNumbersError:
                 log.warning("Não há mais números aleatórios")
+            except UnexpectedError as e:
+                log.error(str(e))
+                return 4
 
         sim_result.collect()
 
