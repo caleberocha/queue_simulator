@@ -1,5 +1,9 @@
 # Simulador de filas
-Simulador de filas desenvolvido para a disciplina de Simulação e Métodos Analíticos. Até o momento, são suportadas filas simples e filas em *tandem*. 
+Simulador de filas desenvolvido para a disciplina de Simulação e Métodos Analíticos. Até o momento, são suportados estes tipos de filas:
+
+- Simples (*G/G/K/C* e *G/G/K*)
+- Em *tandem*
+- Com probabilidade de roteamento
 
 ## Requisitos
 Python 3.7
