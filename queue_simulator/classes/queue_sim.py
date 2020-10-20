@@ -11,28 +11,31 @@ class Queue:
         self.min_arrival, self.max_arrival = arrival
         self.min_service, self.max_service = service
         self.size = 0
-        self.stats = [0 for n in range(capacity + 1)]
+        self.stats = {n: 0 for n in range(capacity + 1)}
         self.total_time = 0
         self.losses = 0
         self.logger = logger()
 
     def put(self, time):
-        if self.size > self.capacity:
+        if self.capacity > 0 and self.size > self.capacity:
             raise QueueFullError()
 
         self.size += 1
-        self.logger.debug(f"Inserido em {repr(self)}")
+        # self.logger.debug(f"Inserido em {repr(self)}")
 
     def get(self, time):
         self.size -= 1
-        self.logger.debug(f"Removido de {repr(self)}")
+        # self.logger.debug(f"Removido de {repr(self)}")
 
     def put_loss(self):
         self.losses += 1
-        self.logger.debug(f"Fila cheia - {repr(self)}")
+        # self.logger.debug(f"Fila cheia - {repr(self)}")
 
     def update_times(self, last_time, prev_time):
-        self.stats[self.size] += last_time - prev_time
+        try:
+            self.stats[self.size] += last_time - prev_time
+        except KeyError:
+            self.stats[self.size] = last_time - prev_time
         self.total_time += last_time - prev_time
 
     def __str__(self):
@@ -42,7 +45,7 @@ class Queue:
 
         time_decimals = 4
         time_size = (
-            len(str(reduce(lambda a, b: max(int(a), int(b)), self.stats)))
+            len("{:.{time_decimals}f}".format(reduce(lambda a, b: max(int(a), int(b)), self.stats.values()), time_decimals=time_decimals))
             + time_decimals + 1
         )
         time_spaces_left = (size_col2 - time_size) // 2
@@ -67,7 +70,7 @@ class Queue:
             c2="-" * size_col2,
             c3="-" * size_col3,
         )
-        for n, time in enumerate(self.stats):
+        for n, time in self.stats.items():
             prob = "{:{prob_size}.{prob_decimals}f}%".format(time / self.total_time * 100, prob_size=prob_size - 1, prob_decimals=prob_decimals)
             s += "|{:^{size_col1}}|{:{time_spaces_left}}{:{time_size}.{time_decimals}f}{:{time_spaces_right}}|{:{prob_spaces_left}}{:{prob_size}}{:{prob_spaces_right}}|\n".format(
                 n,
@@ -91,4 +94,4 @@ class Queue:
         return s
 
     def __repr__(self):
-        return f"""Fila {self.name}: {[(n, time) for n, time in enumerate(self.stats)]}, {self.losses} perdas"""
+        return f"""Fila {self.name}: {[(n, time) for n, time in self.stats.items()]}, {self.losses} perdas"""

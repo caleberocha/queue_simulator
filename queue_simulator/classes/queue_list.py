@@ -1,5 +1,6 @@
 from .queue_sim import Queue
 from ..decorators import singleton
+from ..errors import QueueNotFoundError
 
 
 @singleton
@@ -23,7 +24,7 @@ class QueueList:
             Queue(
                 q["name"],
                 q["servers"],
-                q["capacity"],
+                q["capacity"] if "capacity" in q else 0,
                 q["arrival"] if i == 0 else [None, None],
                 q["service"],
             )

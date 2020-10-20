@@ -46,7 +46,7 @@ class Event:
 
         if self.next_queue_index >= 0 and self.next_queue_index < queue_list.size():
             next_queue = queue_list.get_queue(self.next_queue_index)
-            if next_queue.size >= next_queue.capacity:
+            if next_queue.capacity > 0 and next_queue.size >= next_queue.capacity:
                 next_queue.put_loss()
             else:
                 next_queue.put(self.time)
