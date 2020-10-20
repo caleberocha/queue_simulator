@@ -16,3 +16,7 @@ class EmptyEscalonatorError(Exception):
 
 class UnexpectedError(Exception):
     pass
+
+
+class QueueNotFoundError(Exception):
+    pass

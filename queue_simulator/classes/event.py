@@ -1,5 +1,6 @@
 from .queue_list import QueueList
 from .escalonator import Escalonator
+from .network import Network
 from .rnd_numbers import RandomNumbers
 from .elapsed_time import ElapsedTime
 from ..functions import conversion
@@ -21,6 +22,7 @@ class Event:
     def run(self):
         queue_list = QueueList()
         escalonator = Escalonator()
+        network = Network()
         rnd_numbers = RandomNumbers()
         elapsed_time = ElapsedTime()
 
@@ -36,10 +38,12 @@ class Event:
                     queue.max_service,
                     rnd_numbers.next(),
                 )
+
+                target = network.target_queue_index(self.queue_index)
                 event = Event(
                     new_time + elapsed_time.last_time,
                     self.queue_index,
-                    self.next_queue_index,
+                    target,
                 )
 
                 escalonator.put(event)
@@ -56,10 +60,12 @@ class Event:
                         next_queue.max_service,
                         rnd_numbers.next(),
                     )
+
+                    target = network.target_queue_index(self.next_queue_index)
                     event = Event(
                         new_time + elapsed_time.last_time,
                         self.next_queue_index,
-                        self.next_queue_index + 1,
+                        target
                     )
                     escalonator.put(event)
 
@@ -72,9 +78,11 @@ class Event:
                     next_queue.max_arrival,
                     rnd_numbers.next(),
                 )
+
+                target = network.target_queue_index(self.queue_index)
                 event = Event(
                     new_time + elapsed_time.last_time,
                     self.queue_index,
-                    self.next_queue_index,
+                    target
                 )
                 escalonator.put(event)

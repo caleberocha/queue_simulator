@@ -12,6 +12,19 @@ class QueueList:
     def get_queue(self, index):
         return self.queues[index]
 
+    def get_queue_by_name(self, name):
+        try:
+            return [q for q in self.queues if q.name == name][0]
+        except IndexError:
+            raise QueueNotFoundError(f"Fila {name} não encontrada")
+
+    def get_queue_index_by_name(self, name):
+        for i, q in enumerate(self.queues):
+            if q.name == name:
+                return i
+
+        raise QueueNotFoundError(f"Fila {name} não encontrada")
+
     def size(self):
         return len(self.queues)
 

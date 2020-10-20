@@ -6,6 +6,7 @@ from .classes.escalonator import Escalonator
 from .classes.rnd_numbers import RandomNumbers
 from .classes.sim_result import SimulationResult
 from .classes.elapsed_time import ElapsedTime
+from .classes.network import Network
 from .functions import parse_args
 from .errors import NoInputError, NoMoreRandomNumbersError, UnexpectedError
 from .logger import logger
@@ -30,6 +31,10 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
     try:
         initial_event = params["initialEvent"]
         queues = QueueList(params["queues"])
+        try:
+            network = Network(params["network"], queues)
+        except KeyError:
+            network = Network([], queues)
         try:
             seeds = params["seeds"]
             random_count = params["random_count"]

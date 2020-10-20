@@ -1,0 +1,69 @@
+{
+    "seeds": [
+        123
+    ],
+    "random_count": 100000,
+    "initialEvent": {
+        "queue": "F1",
+        "time": 1.0
+    },
+    "queues": [
+        {
+            "name": "F1",
+            "servers": 1,
+            "arrival": [
+                1.0,
+                4.0
+            ],
+            "service": [
+                1.0,
+                1.5
+            ]
+        },
+        {
+            "name": "F2",
+            "servers": 3,
+            "capacity": 5,
+            "service": [
+                5.0,
+                10.0
+            ]
+        },
+        {
+            "name": "F3",
+            "servers": 2,
+            "capacity": 8,
+            "service": [
+                10.0,
+                20.0
+            ]
+        }
+    ],
+    "network": [
+        {
+            "source": "F1",
+            "target": "F2",
+            "probability": 0.8
+        },
+        {
+            "source": "F1",
+            "target": "F3",
+            "probability": 0.2
+        },
+        {
+            "source": "F2",
+            "target": "F1",
+            "probability": 0.3
+        },
+        {
+            "source": "F2",
+            "target": "F3",
+            "probability": 0.5
+        },
+        {
+            "source": "F3",
+            "target": "F2",
+            "probability": 0.7
+        }
+    ]
+}
