@@ -20,3 +20,7 @@ class UnexpectedError(Exception):
 
 class QueueNotFoundError(Exception):
     pass
+
+
+class SimCountNotDefinedError(Exception):
+    pass

@@ -35,17 +35,20 @@ class Network:
         if queue_index == -1:
             return 0
 
-        targets = self.network[queue_index]
+        try:
+            targets = self.network[queue_index]
 
-        # Sem probabilidade de roteamento
-        if len(targets) == 1 and targets[0]["probability"] == 1.0:
-            return targets[0]["target"]
+            # Sem probabilidade de roteamento
+            if len(targets) == 1 and targets[0]["probability"] == 1.0:
+                return targets[0]["target"]
 
-        # Com probabilidade de roteamento
-        rnd_numbers = RandomNumbers()
-        rand = rnd_numbers.next()
-        for q in targets:
-            if rand < q["probability"]:
-                return q["target"]
-            rand = rand - q["probability"]
-        return self.exit
+            # Com probabilidade de roteamento
+            rnd_numbers = RandomNumbers()
+            rand = rnd_numbers.next()
+            for q in targets:
+                if rand < q["probability"]:
+                    return q["target"]
+                rand = rand - q["probability"]
+            return self.exit
+        except KeyError:
+            return self.exit

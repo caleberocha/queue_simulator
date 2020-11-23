@@ -84,6 +84,7 @@ def run_simulator(input_file=None, input_json=None, log_level=logging.INFO):
 
     elapsed_time.reset()
     log.info(sim_result.get_result())
+    # log.info(sim_result.get_result_analytical())
     return 0
 
 
