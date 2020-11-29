@@ -40,11 +40,25 @@ class Queue:
             self.stats[self.size] = last_time - prev_time
         self.total_time += last_time - prev_time
 
+    def avg_arrival_rate(self):
+        try:
+            return (1 / self.max_arrival + 1 / self.min_arrival) / 2
+        except TypeError:
+            return 0
+
+    def avg_service_rate(self):
+        return (1 / self.max_service + 1 / self.min_service) / 2
+
     def avg_population(self, stats, total_time):
         return sum([n * (t / total_time) for n, t in stats.items()])
 
-    def throughtput(self):
-        return self.serviced / self.total_time
+    def throughtput(self, stats, total_time):
+        return sum(
+            [
+                (t / total_time) * self.avg_service_rate() * min(n, self.servers)
+                for n, t in stats.items()
+            ]
+        )
 
     def utilization(self, stats, total_time):
         return sum(
@@ -55,7 +69,9 @@ class Queue:
         )
 
     def avg_wait_time(self, stats, total_time):
-        return self.avg_population(stats, total_time) / self.throughtput()
+        return self.avg_population(stats, total_time) / self.throughtput(
+            stats, total_time
+        )
 
     def show_stats(self, stats, total_time, losses):
         size_col1 = 10
@@ -81,7 +97,7 @@ class Queue:
         prob_spaces_left = (size_col3 - prob_size) // 2
         prob_spaces_right = size_col3 - prob_size - prob_spaces_left
 
-        s = f"Fila {self.name} (G/G/{self.servers}/{self.capacity})\n"
+        s = f"Fila {self.name} (G/G/{self.servers}{'/' + self.capacity if self.capacity > 0 else ''})\n"
         s += "|{:^{size_col1}}|{:^{size_col2}}|{:^{size_col3}}|\n".format(
             "Estado",
             "Tempo",
@@ -119,10 +135,14 @@ class Queue:
                 prob_spaces_right=prob_spaces_right,
             )
         s += f"Perdas: {losses}\n"
+        # s += "Taxa de chegada: {:.4f}\n".format(self.avg_arrival_rate())
+        # s += "Taxa de atendimento: {:.4f}\n".format(self.avg_service_rate())
         s += "População média: {:.4f}\n".format(self.avg_population(stats, total_time))
-        s += "Vazão: {:.4f}\n".format(self.throughtput())
+        s += "Vazão: {:.4f}\n".format(self.throughtput(stats, total_time))
         s += "Utilização: {:.4f}\n".format(self.utilization(stats, total_time))
-        s += "Tempo médio de espera: {:.4f}\n".format(self.avg_wait_time(stats, total_time))
+        s += "Tempo médio de espera: {:.4f}\n".format(
+            self.avg_wait_time(stats, total_time)
+        )
 
         return s
 
@@ -144,8 +164,7 @@ class SimResultQueue(Queue):
     def __str__(self):
         if self.sim_count <= 0:
             raise SimCountNotDefinedError("Número de simulações não definido")
-        
-        
+
         return self.show_stats(
             {n: s / self.sim_count for n, s in self.stats.items()},
             self.total_time / self.sim_count,
